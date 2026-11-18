@@ -1,17 +1,17 @@
-namespace SpriteKind {
+namespace SpriteKind { // Estructura del código y comentarios; namespace de MakeCode (No visto)
     export const Llave = SpriteKind.create()
     export const Jefe = SpriteKind.create()
     export const BalaJefe = SpriteKind.create()
 }
 
-let etapa = 1
+let etapa = 1 // Declaración de variables con let; variables y tipos de datos
 let bajas = 0
 let llaves = 0
 let vidaJefe = 67
 let ultimoGolpe = -1000
 let jefe: Sprite = null
 
-let suelo = image.create(16, 16)
+let suelo = image.create(16, 16) // Variables y tipos de datos; imágenes de MakeCode (No visto)
 suelo.fill(13)
 suelo.setPixel(3, 5, 12)
 suelo.setPixel(11, 12, 12)
@@ -22,7 +22,7 @@ let puerta = image.create(16, 16)
 puerta.fill(12)
 puerta.fillRect(4, 1, 8, 15, 6)
 
-let mapaArena = tiles.createTilemap(
+let mapaArena = tiles.createTilemap( // Mapas de MakeCode Arcade (No visto)
     hex`
     08000800
     0101010201010101
@@ -39,20 +39,20 @@ let mapaArena = tiles.createTilemap(
     TileScale.Sixteen
 )
 tiles.setCurrentTilemap(mapaArena)
-for (let fila = 0; fila < 8; fila++) {
-    for (let columna = 0; columna < 8; columna++) {
-        if (fila == 0 || fila == 7 || columna == 0 || columna == 7) {
+for (let fila = 0; fila < 8; fila++) { // Bucles: for
+    for (let columna = 0; columna < 8; columna++) { // Bucles: for
+        if (fila == 0 || fila == 7 || columna == 0 || columna == 7) { // Condicionales: if; comparaciones y operadores lógicos
             tiles.setWallAt(tiles.getTileLocation(columna, fila), true)
         }
     }
 }
 
-let dibujoJugador = image.create(8, 8)
+let dibujoJugador = image.create(8, 8) // Variables y tipos de datos; imágenes de MakeCode (No visto)
 dibujoJugador.fillRect(2, 0, 4, 5, 8)
 dibujoJugador.fillRect(1, 4, 6, 3, 8)
 dibujoJugador.setPixel(3, 2, 1)
 dibujoJugador.setPixel(5, 2, 1)
-let jugador = sprites.create(dibujoJugador, SpriteKind.Player)
+let jugador = sprites.create(dibujoJugador, SpriteKind.Player) // Sprites de MakeCode Arcade (No visto)
 tiles.placeOnTile(jugador, tiles.getTileLocation(4, 4))
 controller.moveSprite(jugador, 80, 80)
 scene.cameraFollowSprite(jugador)
@@ -60,12 +60,12 @@ scene.setBackgroundColor(15)
 info.setLife(8)
 info.setScore(0)
 
-let dibujoEnemigo = image.create(8, 8)
+let dibujoEnemigo = image.create(8, 8) // Variables y tipos de datos; imágenes de MakeCode (No visto)
 dibujoEnemigo.fillRect(1, 1, 6, 6, 5)
 dibujoEnemigo.setPixel(2, 3, 1)
 dibujoEnemigo.setPixel(5, 3, 1)
 
-let pisoLaberinto = image.create(16, 16)
+let pisoLaberinto = image.create(16, 16) // Variables y tipos de datos; diseño del laberinto en MakeCode (No visto)
 pisoLaberinto.fill(7)
 let muroLaberinto = image.create(16, 16)
 muroLaberinto.fill(6)
@@ -78,13 +78,13 @@ dibujoLlave.fillRect(1, 1, 3, 3, 5)
 dibujoLlave.fillRect(3, 3, 2, 4, 5)
 dibujoLlave.setPixel(6, 6, 5)
 
-function ponerPared(x: number, y: number) {
+function ponerPared(x: number, y: number) { // Funciones con parámetros; mapas de MakeCode (No visto)
     let lugar = tiles.getTileLocation(x, y)
     tiles.setTileAt(lugar, muroLaberinto)
     tiles.setWallAt(lugar, true)
 }
 
-function crearLaberinto() {
+function crearLaberinto() { // Funciones; mapas de MakeCode Arcade (No visto)
     tiles.setCurrentTilemap(tiles.createTilemap(
         hex`
         10001000
@@ -110,27 +110,27 @@ function crearLaberinto() {
         TileScale.Sixteen
     ))
     scene.setBackgroundColor(1)
-    for (let n = 0; n < 16; n++) {
+    for (let n = 0; n < 16; n++) { // Bucles: for
         ponerPared(n, 0)
         ponerPared(n, 15)
         ponerPared(0, n)
         ponerPared(15, n)
     }
-    for (let y = 1; y < 15; y++) {
-        if (y != 3) ponerPared(4, y)
+    for (let y = 1; y < 15; y++) { // Bucles: for
+        if (y != 3) ponerPared(4, y) // Condicionales: if; comparaciones
         if (y != 11) ponerPared(8, y)
         if (y != 4) ponerPared(12, y)
     }
-    for (let x = 1; x < 4; x++) {
-        if (x != 2) ponerPared(x, 6)
+    for (let x = 1; x < 4; x++) { // Bucles: for
+        if (x != 2) ponerPared(x, 6) // Condicionales: if; comparaciones
         if (x != 3) ponerPared(x, 11)
     }
-    for (let x = 5; x < 8; x++) {
-        if (x != 6) ponerPared(x, 5)
+    for (let x = 5; x < 8; x++) { // Bucles: for
+        if (x != 6) ponerPared(x, 5) // Condicionales: if; comparaciones
         if (x != 5) ponerPared(x, 10)
     }
-    for (let x = 9; x < 12; x++) {
-        if (x != 10) ponerPared(x, 7)
+    for (let x = 9; x < 12; x++) { // Bucles: for
+        if (x != 10) ponerPared(x, 7) // Condicionales: if; comparaciones
         if (x != 11) ponerPared(x, 12)
     }
     ponerPared(14, 9)
@@ -138,24 +138,24 @@ function crearLaberinto() {
     tiles.setTileAt(puerta, salida)
     tiles.setWallAt(puerta, true)
     tiles.placeOnTile(jugador, tiles.getTileLocation(2, 2))
-    for (let lugar of [tiles.getTileLocation(3, 13), tiles.getTileLocation(9, 2), tiles.getTileLocation(14, 13)]) {
+    for (let lugar of [tiles.getTileLocation(3, 13), tiles.getTileLocation(9, 2), tiles.getTileLocation(14, 13)]) { // Bucle for...of (No visto)
         let llave = sprites.create(dibujoLlave, SpriteKind.Llave)
         tiles.placeOnTile(llave, lugar)
     }
 }
 
-function crearEnemigo() {
+function crearEnemigo() { // Funciones; sprites y azar de MakeCode Arcade (No visto)
     let enemigo = sprites.create(dibujoEnemigo, SpriteKind.Enemy)
     let entrada = Math.randomRange(0, 3)
-    if (entrada == 0) tiles.placeOnTile(enemigo, tiles.getTileLocation(3, 1))
+    if (entrada == 0) tiles.placeOnTile(enemigo, tiles.getTileLocation(3, 1)) // Condicionales: if; comparaciones
     else if (entrada == 1) tiles.placeOnTile(enemigo, tiles.getTileLocation(3, 6))
     else if (entrada == 2) tiles.placeOnTile(enemigo, tiles.getTileLocation(1, 3))
     else tiles.placeOnTile(enemigo, tiles.getTileLocation(6, 3))
     enemigo.follow(jugador, 20)
 }
 
-function crearJefe() {
-    for (let enemigo of sprites.allOfKind(SpriteKind.Enemy)) enemigo.destroy()
+function crearJefe() { // Funciones; sprites de MakeCode Arcade (No visto)
+    for (let enemigo of sprites.allOfKind(SpriteKind.Enemy)) enemigo.destroy() // Bucle for...of (No visto)
     let dibujoJefe = image.create(16, 16)
     dibujoJefe.fillRect(2, 4, 12, 11, 10)
     dibujoJefe.fillRect(0, 1, 4, 5, 5)
@@ -170,7 +170,7 @@ function crearJefe() {
     jugador.sayText("EL GUARDIAN DESPIERTA", 2500, false)
 }
 
-function iniciarJefe() {
+function iniciarJefe() { // Funciones; cambio de mapa de MakeCode (No visto)
     suelo.fill(2)
     pared.fill(10)
     puerta.fill(4)
@@ -180,11 +180,11 @@ function iniciarJefe() {
     crearJefe()
 }
 
-function disparar() {
+function disparar() { // Funciones; proyectiles y azar de MakeCode (No visto)
     let direccion = Math.randomRange(0, 3)
     let vx = 0
     let vy = 0
-    if (direccion == 0) vx = 120
+    if (direccion == 0) vx = 120 // Condicionales: if; comparaciones
     else if (direccion == 1) vx = -120
     else if (direccion == 2) vy = 120
     else vy = -120
@@ -198,45 +198,45 @@ function disparar() {
     bala.lifespan = 1500
 }
 
-function perderVida() {
-    if (game.runtime() - ultimoGolpe >= 1500) {
+function perderVida() { // Funciones; vidas de MakeCode (No visto)
+    if (game.runtime() - ultimoGolpe >= 1500) { // Condicionales: if; comparaciones y operadores matemáticos
         ultimoGolpe = game.runtime()
         info.changeLifeBy(-1)
     }
 }
 
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () { if (etapa != 2) disparar() })
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () { if (etapa != 2) disparar() }) // Eventos de MakeCode Arcade (No visto); condicionales: if
 controller.A.onEvent(ControllerButtonEvent.Repeated, function () { if (etapa != 2) disparar() })
-game.onUpdateInterval(1800, function () { if (etapa == 1) crearEnemigo() })
+game.onUpdateInterval(1800, function () { if (etapa == 1) crearEnemigo() }) // Eventos de MakeCode Arcade (No visto); condicionales: if
 
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (bala, enemigo) {
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (bala, enemigo) { // Eventos de MakeCode Arcade (No visto); funciones y operadores matemáticos
     bala.destroy()
     enemigo.destroy()
     bajas++
     info.changeScoreBy(10)
-    if (bajas == 25) {
+    if (bajas == 25) { // Condicionales: if; comparaciones
         etapa = 2
-        for (let resto of sprites.allOfKind(SpriteKind.Enemy)) resto.destroy()
+        for (let resto of sprites.allOfKind(SpriteKind.Enemy)) resto.destroy() // Bucle for...of (No visto)
         for (let resto of sprites.allOfKind(SpriteKind.Projectile)) resto.destroy()
         jugador.sayText("LABERINTO DE LAS TRES LLAVES", 3000, false)
         pause(3000)
         crearLaberinto()
     }
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (jugador, enemigo) {
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (jugador, enemigo) { // Eventos de MakeCode Arcade (No visto)
     enemigo.destroy()
     perderVida()
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Llave, function (jugador, llave) {
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Llave, function (jugador, llave) { // Eventos de MakeCode Arcade (No visto); operadores matemáticos
     llave.destroy()
     llaves++
-    if (llaves == 3) {
+    if (llaves == 3) { // Condicionales: if; comparaciones
         tiles.setWallAt(tiles.getTileLocation(2, 0), false)
         jugador.sayText("PUERTA ABIERTA: VUELVE AL INICIO", 3000, false)
     }
 })
-scene.onOverlapTile(SpriteKind.Player, salida, function () {
-    if (etapa == 2 && llaves == 3) {
+scene.onOverlapTile(SpriteKind.Player, salida, function () { // Eventos de MakeCode Arcade (No visto)
+    if (etapa == 2 && llaves == 3) { // Condicionales: if; comparaciones y operadores lógicos
         etapa = 3
         jugador.sayText("EL GUARDIAN TE ESPERA", 3000, false)
         pause(3000)
@@ -245,8 +245,8 @@ scene.onOverlapTile(SpriteKind.Player, salida, function () {
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Jefe, function () { perderVida() })
 
-game.onUpdateInterval(2500, function () {
-    if (etapa != 3 || jefe == null) return
+game.onUpdateInterval(2500, function () { // Eventos de MakeCode Arcade (No visto)
+    if (etapa != 3 || jefe == null) return // Condicionales: if; operadores lógicos; uso de return
     let bala = sprites.create(img`
         . 4 4 .
         4 2 2 4
@@ -257,20 +257,20 @@ game.onUpdateInterval(2500, function () {
     let dx = jugador.x - jefe.x
     let dy = jugador.y - jefe.y
     let distancia = Math.max(Math.abs(dx), Math.abs(dy))
-    if (distancia == 0) { bala.destroy(); return }
+    if (distancia == 0) { bala.destroy(); return } // Condicionales: if; comparaciones; uso de return
     bala.vx = dx * 40 / distancia
     bala.vy = dy * 40 / distancia
     bala.setFlag(SpriteFlag.DestroyOnWall, true)
     bala.lifespan = 2500
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.BalaJefe, function (jugador, bala) {
+sprites.onOverlap(SpriteKind.Player, SpriteKind.BalaJefe, function (jugador, bala) { // Eventos de MakeCode Arcade (No visto)
     bala.destroy()
     perderVida()
 })
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Jefe, function (bala, guardian) {
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Jefe, function (bala, guardian) { // Eventos de MakeCode Arcade (No visto); operadores matemáticos
     bala.destroy()
     vidaJefe -= 5
-    if (vidaJefe <= 0) {
+    if (vidaJefe <= 0) { // Condicionales: if; comparaciones
         vidaJefe = 0
         guardian.destroy()
         jefe = null
@@ -279,15 +279,14 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Jefe, function (bala, guardi
         game.over(true)
     }
 })
-info.onLifeZero(function () {
+info.onLifeZero(function () { // Eventos de MakeCode Arcade (No visto)
     game.setGameOverMessage(false, "GAME OVER")
     game.over(false)
 })
 
-scene.createRenderable(100, function (pantalla) {
+scene.createRenderable(100, function (pantalla) { // Pantalla de MakeCode Arcade (No visto); condicionales: if
     pantalla.fillRect(0, 13, 120, 11, 15)
     if (etapa == 1) pantalla.print("Bajas: " + bajas + "/25", 2, 15, 1)
     if (etapa == 2) pantalla.print("Llaves: " + llaves + "/3", 2, 15, 1)
     if (etapa == 3) pantalla.print("Jefe: " + vidaJefe + "/67", 2, 15, 1)
 })
-
